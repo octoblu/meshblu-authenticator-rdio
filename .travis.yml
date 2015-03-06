@@ -1,0 +1,13 @@
+language: node_js
+sudo: false
+node_js:
+- '0.10'
+deploy:
+  provider: opsworks
+  access_key_id: AKIAIT4X4NDGM2WVL6VA
+  secret_access_key:
+    secure: "VJ6D4e/oSQgUCdEdjJckB5I5fUTNXPt+znT63EIQmkg+t2O+ECx2K/I0brQBQfokhr1hc8Qm3KCApFvnp4WF/tUwvaWuJ/m4TDq/7zXhlE5w72NWrMCTxXI7JLK9x2m7ppzJWgId7KhS32mTe8RUTXqQbjPLuccjBXR8ixh3gcU="
+
+  app-id: 75538bdf-f3f0-4ae3-9b92-61a33f4a9208
+  on:
+    branch: master
