@@ -10,6 +10,7 @@ githubOauthConfig =
   callbackURL: process.env.GITHUB_CALLBACK_URL
   passReqToCallback: true
 
+
 class GithubConfig
   constructor: (@meshbluConn, @meshbluJSON) ->
     @meshbludb = new MeshbluDB @meshbluConn
