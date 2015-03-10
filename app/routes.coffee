@@ -14,7 +14,7 @@ class Router
 
   afterPassportLogin: (request, response) =>
     {callbackUrl} = request.cookies
-    delete request.cookies.callbackUrl
+    response.cookie 'callbackUrl', null, maxAge: -1
     return response.status(401).send(new Error 'Invalid User') unless request.user
     return response.status(201).send(request.user) unless callbackUrl?
     uriParams = url.parse callbackUrl
@@ -27,10 +27,11 @@ class Router
     response.render 'index'
 
   storeCallbackUrl: (request, response, next) =>
-    if request.query.callbackUrl?
-      request.cookies.callbackUrl = request.query.callbackUrl
+    if request.query.callback?
+      response.cookie 'callbackUrl', request.query.callback, maxAge: 60 * 60 * 1000
     else
-      delete request.cookies.callbackUrl
+      response.cookie 'callbackUrl', null, maxAge: -1
+
     next()
 
 module.exports = Router
