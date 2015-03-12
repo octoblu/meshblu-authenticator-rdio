@@ -33,11 +33,12 @@ class GithubConfig
         done null, device
 
     deviceCreateCallback = (error, createdDevice) =>
+      return done error if error?
       getDeviceToken createdDevice?.uuid
 
     deviceFindCallback = (error, foundDevice) =>
-      if foundDevice?
-        return getDeviceToken foundDevice.uuid
+      return done error if error?
+      return getDeviceToken foundDevice.uuid if foundDevice?
       deviceModel.create query, device, profileId, fakeSecret, deviceCreateCallback
 
     deviceModel.findVerified query, fakeSecret, deviceFindCallback
