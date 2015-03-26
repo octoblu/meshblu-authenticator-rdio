@@ -3,11 +3,12 @@ morgan = require 'morgan'
 bodyParser = require 'body-parser'
 errorHandler = require 'errorhandler'
 cookieParser = require 'cookie-parser'
-session = require 'express-session'
+session = require 'cookie-session'
 passport = require 'passport'
 Router = require './app/routes'
 Config = require './app/config'
 meshblu = require 'meshblu'
+airbrake = require('airbrake').createClient process.env.AIRBRAKE_API_KEY
 debug = require('debug')('meshblu-github-authenticator:server')
 
 port = process.env.MESHBLU_GITHUB_AUTHENTICATOR_PORT ? 8008
@@ -15,6 +16,7 @@ port = process.env.MESHBLU_GITHUB_AUTHENTICATOR_PORT ? 8008
 app = express()
 app.use morgan('dev')
 app.use errorHandler()
+app.use airbrake.expressHandler()
 app.use bodyParser.json()
 app.use bodyParser.urlencoded(extended: true)
 app.use cookieParser()
@@ -45,10 +47,9 @@ catch
   meshbluJSON =
     uuid:   process.env.MESHBLU_GITHUB_AUTHENTICATOR_UUID
     token:  process.env.MESHBLU_GITHUB_AUTHENTICATOR_TOKEN
-    name:   process.env.MESHBLU_GITHUB_AUTHENTICATOR_NAME
     server: process.env.MESHBLU_HOST
     port:   process.env.MESHBLU_PORT
-
+    name:   'Github Authenticator'
 
 meshbluConn = meshblu.createConnection meshbluJSON
 
