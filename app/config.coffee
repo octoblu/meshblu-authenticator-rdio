@@ -26,7 +26,7 @@ class GithubConfig
       type: 'octoblu:user'
 
     getDeviceToken = (uuid) =>
-      @meshbludb.generateAndStoreToken uuid: uuid, (error, device) =>
+      @meshbludb.generateAndStoreToken uuid, (error, device) =>
         device.id = profileId
         done null, device
 
