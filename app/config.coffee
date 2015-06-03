@@ -1,7 +1,6 @@
 passport = require 'passport'
 GithubStrategy = require('passport-github').Strategy
 {DeviceAuthenticator} = require 'meshblu-authenticator-core'
-MeshbluDB = require 'meshblu-db'
 debug = require('debug')('meshblu-github-authenticator:config')
 
 githubOauthConfig =
@@ -12,15 +11,14 @@ githubOauthConfig =
 
 
 class GithubConfig
-  constructor: (@meshbluConn, @meshbluJSON) ->
-    @meshbludb = new MeshbluDB @meshbluConn
+  constructor: (@meshbludb, @meshbluJSON) ->
 
   onAuthentication: (request, accessToken, refreshToken, profile, done) =>
     profileId = profile?.id
     fakeSecret = 'github-authenticator'
     authenticatorUuid = @meshbluJSON.uuid
     authenticatorName = @meshbluJSON.name
-    deviceModel = new DeviceAuthenticator authenticatorUuid, authenticatorName, meshblu: @meshbluConn, meshbludb: @meshbludb
+    deviceModel = new DeviceAuthenticator authenticatorUuid, authenticatorName, meshbludb: @meshbludb
     query = {}
     query[authenticatorUuid + '.id'] = profileId
     device =
@@ -28,7 +26,7 @@ class GithubConfig
       type: 'octoblu:user'
 
     getDeviceToken = (uuid) =>
-      @meshbluConn.generateAndStoreToken uuid: uuid, (device) =>
+      @meshbludb.generateAndStoreToken uuid: uuid, (error, device) =>
         device.id = profileId
         done null, device
 
