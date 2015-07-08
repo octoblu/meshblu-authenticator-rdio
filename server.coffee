@@ -8,9 +8,26 @@ passport = require 'passport'
 Router = require './app/routes'
 Config = require './app/config'
 MeshbluDB = require 'meshblu-db'
-
 airbrake = require('airbrake').createClient process.env.AIRBRAKE_API_KEY
-debug = require('debug')('meshblu-github-authenticator:server')
+debug = require('debug')('meshblu-rdio-authenticator:server')
+
+meshbluJSON =
+    uuid:   process.env.MESHBLU_RDIO_AUTHENTICATOR_UUID
+    token:  process.env.MESHBLU_RDIO_AUTHENTICATOR_TOKEN
+    server: process.env.MESHBLU_HOST
+    port:   process.env.MESHBLU_PORT
+
+if !meshbluJSON.uuid || !meshbluJSON.token
+  try
+    meshbluJSON  = require './meshblu.json'
+
+  catch
+    debug "I can't find my credentials!"
+    process.exit -1
+
+debug 'meshbluJSON', meshbluJSON
+
+meshbluJSON.name = 'Rdio Authenticator'
 
 port = process.env.MESHBLU_RDIO_AUTHENTICATOR_PORT ? 9009
 
@@ -42,27 +59,17 @@ app.set 'view engine', 'html'
 
 app.set 'views', __dirname + '/app/views'
 
-try
-  meshbluJSON  = require './meshblu.json'
-catch
-  meshbluJSON =
-    uuid:   process.env.MESHBLU_RDIO_AUTHENTICATOR_UUID
-    token:  process.env.MESHBLU_RDIO_AUTHENTICATOR_TOKEN
-    server: process.env.MESHBLU_HOST
-    port:   process.env.MESHBLU_PORT
-    name:   'Github Authenticator'
+meshbluDB = new MeshbluDB meshbluJSON
 
-meshbludb = new MeshbluDB meshbluJSON
+meshbluDB.findOne uuid: meshbluJSON.uuid, (error, device) ->
+  meshbluDB.setPrivateKey(device.privateKey) unless meshbluDB.privateKey
 
-meshbludb.findOne uuid: meshbluJSON.uuid, (error, device) ->
-  meshbludb.setPrivateKey(device.privateKey) unless meshbludb.privateKey
-
-config = new Config meshbludb, meshbluJSON
+config = new Config meshbluDB, meshbluJSON
 config.register()
 
 router = new Router app
 router.register()
 
 app.listen port, =>
-  debug "Meshblu Github Authenticator..."
+  debug "Meshblu Rdio Authenticator..."
   debug "Listening at localhost:#{port}"
