@@ -1,1 +1,1 @@
-# meshblu-github-authenticator
+# meshblu-rdio-authenticator
