@@ -1,2 +1,4 @@
 node_modules
 *.sublime-workspace
+meshblu.json
+npm-debug.log
