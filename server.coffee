@@ -12,7 +12,7 @@ MeshbluDB = require 'meshblu-db'
 airbrake = require('airbrake').createClient process.env.AIRBRAKE_API_KEY
 debug = require('debug')('meshblu-github-authenticator:server')
 
-port = process.env.MESHBLU_GITHUB_AUTHENTICATOR_PORT ? 8008
+port = process.env.MESHBLU_RDIO_AUTHENTICATOR_PORT ? 9009
 
 app = express()
 app.use morgan('dev')
@@ -46,8 +46,8 @@ try
   meshbluJSON  = require './meshblu.json'
 catch
   meshbluJSON =
-    uuid:   process.env.MESHBLU_GITHUB_AUTHENTICATOR_UUID
-    token:  process.env.MESHBLU_GITHUB_AUTHENTICATOR_TOKEN
+    uuid:   process.env.MESHBLU_RDIO_AUTHENTICATOR_UUID
+    token:  process.env.MESHBLU_RDIO_AUTHENTICATOR_TOKEN
     server: process.env.MESHBLU_HOST
     port:   process.env.MESHBLU_PORT
     name:   'Github Authenticator'

@@ -1,5 +1,5 @@
 passport = require 'passport'
-debug = require('debug')('meshblu-github-authenticator:routes')
+debug = require('debug')('meshblu-rdio-authenticator:routes')
 url = require 'url'
 
 class Router
@@ -8,11 +8,12 @@ class Router
   register: =>
     @app.get  '/', (request, response) => response.status(200).send status: 'online'
 
-    @app.get '/login', @storeCallbackUrl, passport.authenticate 'github', scope: ['profile', 'email']
+    @app.get '/login', @storeCallbackUrl, passport.authenticate 'rdio', scope: []
 
-    @app.get '/oauthcallback', passport.authenticate('github', { failureRedirect: '/login' }), @afterPassportLogin
+    @app.get '/oauthcallback', passport.authenticate('rdio', { failureRedirect: '/login' }), @afterPassportLogin
 
   afterPassportLogin: (request, response) =>
+    console.log 'RESPONSE', response
     {callbackUrl} = request.cookies
     response.cookie 'callbackUrl', null, maxAge: -1
     return response.status(401).send(new Error 'Invalid User') unless request.user

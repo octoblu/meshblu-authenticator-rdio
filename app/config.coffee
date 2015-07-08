@@ -1,21 +1,26 @@
 passport = require 'passport'
-GithubStrategy = require('passport-github').Strategy
+RdioStrategy = require('passport-rdio-oauth2').Strategy
 {DeviceAuthenticator} = require 'meshblu-authenticator-core'
-debug = require('debug')('meshblu-github-authenticator:config')
+debug = require('debug')('meshblu-rdio-authenticator:config')
 
-githubOauthConfig =
-  clientID: process.env.GITHUB_CLIENT_ID
-  clientSecret: process.env.GITHUB_CLIENT_SECRET
-  callbackURL: process.env.GITHUB_CALLBACK_URL
+rdioOauthConfig =
+  # clientID: process.env.RDIO_CLIENT_ID
+  # clientSecret: process.env.GITHUB_CLIENT_SECRET
+  # callbackURL: process.env.GITHUB_CALLBACK_URL
+  clientID: 'eeuvwjobdjeavcv3ed7ptq4iri'
+  clientSecret: 'pQq5n_LQ1eEUSyjC8dZvmg'
+  callbackURL: 'http://localhost:9009/api/oauth/rdio/callback'
+
   passReqToCallback: true
 
 
-class GithubConfig
+class RdioConfig
   constructor: (@meshbludb, @meshbluJSON) ->
 
   onAuthentication: (request, accessToken, refreshToken, profile, done) =>
+    console.log 'PROFILE', profile
     profileId = profile?.id
-    fakeSecret = 'github-authenticator'
+    fakeSecret = 'rdio-authenticator'
     authenticatorUuid = @meshbluJSON.uuid
     authenticatorName = @meshbluJSON.name
     deviceModel = new DeviceAuthenticator authenticatorUuid, authenticatorName, meshbludb: @meshbludb
@@ -42,6 +47,6 @@ class GithubConfig
     deviceModel.findVerified query, fakeSecret, deviceFindCallback
 
   register: =>
-    passport.use new GithubStrategy githubOauthConfig, @onAuthentication
+    passport.use new RdioStrategy rdioOauthConfig, @onAuthentication
 
-module.exports = GithubConfig
+module.exports = RdioConfig

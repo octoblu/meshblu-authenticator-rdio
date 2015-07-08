@@ -1,5 +1,5 @@
 {
-  "name": "meshblu-github-authenticator",
+  "name": "meshblu-rdio-authenticator",
   "version": "2.0.0",
   "description": "",
   "main": "index.js",
@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/octoblu/meshblu-github-authenticator.git"
+    "url": "https://github.com/octoblu/meshblu-rdio-authenticator.git"
   },
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/octoblu/meshblu-github-authenticator/issues"
+    "url": "https://github.com/octoblu/meshblu-rdio-authenticator/issues"
   },
-  "homepage": "https://github.com/octoblu/meshblu-github-authenticator",
+  "homepage": "https://github.com/octoblu/meshblu-rdio-authenticator",
   "devDependencies": {
     "chai": "^2.1.0",
     "coffee-script": "^1.9.1",
@@ -41,6 +41,6 @@
     "meshblu-db": "^2.1.0",
     "morgan": "^1.5.1",
     "passport": "^0.2.1",
-    "passport-github": "git://github.com/jaredhanson/passport-github.git"
+    "passport-rdio-oauth2": "^1.0.0"
   }
 }
