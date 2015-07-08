@@ -9,7 +9,7 @@ rdioOauthConfig =
   # callbackURL: process.env.GITHUB_CALLBACK_URL
   clientID: 'eeuvwjobdjeavcv3ed7ptq4iri'
   clientSecret: 'pQq5n_LQ1eEUSyjC8dZvmg'
-  callbackURL: 'http://localhost:9009/api/oauth/rdio/callback'
+  callbackURL: 'http://localhost:8008/api/oauth/rdio/callback'
 
   passReqToCallback: true
 

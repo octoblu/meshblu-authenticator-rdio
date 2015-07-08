@@ -29,7 +29,7 @@ debug 'meshbluJSON', meshbluJSON
 
 meshbluJSON.name = 'Rdio Authenticator'
 
-port = process.env.MESHBLU_RDIO_AUTHENTICATOR_PORT ? 9009
+port = process.env.MESHBLU_RDIO_AUTHENTICATOR_PORT ? 8008
 
 app = express()
 app.use morgan('dev')
