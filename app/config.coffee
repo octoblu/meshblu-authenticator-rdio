@@ -5,11 +5,11 @@ debug = require('debug')('meshblu-rdio-authenticator:config')
 
 rdioOauthConfig =
   # clientID: process.env.RDIO_CLIENT_ID
-  # clientSecret: process.env.GITHUB_CLIENT_SECRET
-  # callbackURL: process.env.GITHUB_CALLBACK_URL
+  # clientSecret: process.env.RDIO_CLIENT_SECRET
+  # callbackURL: process.env.RDIO_CALLBACK_URL
   clientID: 'eeuvwjobdjeavcv3ed7ptq4iri'
   clientSecret: 'pQq5n_LQ1eEUSyjC8dZvmg'
-  callbackURL: 'http://localhost:8008/api/oauth/rdio/callback'
+  callbackURL: 'http://localhost:8008/oauthcallback'
 
   passReqToCallback: true
 
@@ -18,7 +18,7 @@ class RdioConfig
   constructor: (@meshbludb, @meshbluJSON) ->
 
   onAuthentication: (request, accessToken, refreshToken, profile, done) =>
-    console.log 'PROFILE', profile
+    debug 'PROFILE', profile
     profileId = profile?.id
     fakeSecret = 'rdio-authenticator'
     authenticatorUuid = @meshbluJSON.uuid

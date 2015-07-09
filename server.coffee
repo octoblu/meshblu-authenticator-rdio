@@ -59,12 +59,13 @@ app.set 'view engine', 'html'
 
 app.set 'views', __dirname + '/app/views'
 
-meshbluDB = new MeshbluDB meshbluJSON
+meshbludb = new MeshbluDB meshbluJSON
+debug 'meshbluJSON before query', meshbluJSON
+meshbludb.findOne uuid: meshbluJSON.uuid, (error, device) ->
+  debug 'findOne device', device
+  meshbludb.setPrivateKey(device.privateKey) unless meshbludb.privateKey
 
-meshbluDB.findOne uuid: meshbluJSON.uuid, (error, device) ->
-  meshbluDB.setPrivateKey(device.privateKey) unless meshbluDB.privateKey
-
-config = new Config meshbluDB, meshbluJSON
+config = new Config meshbludb, meshbluJSON
 config.register()
 
 router = new Router app

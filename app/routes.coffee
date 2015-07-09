@@ -13,7 +13,7 @@ class Router
     @app.get '/oauthcallback', passport.authenticate('rdio', { failureRedirect: '/login' }), @afterPassportLogin
 
   afterPassportLogin: (request, response) =>
-    console.log 'RESPONSE', response
+    debug 'RESPONSE', response
     {callbackUrl} = request.cookies
     response.cookie 'callbackUrl', null, maxAge: -1
     return response.status(401).send(new Error 'Invalid User') unless request.user
