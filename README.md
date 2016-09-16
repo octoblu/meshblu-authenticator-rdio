@@ -7,4 +7,6 @@
 [![Slack Status](http://community-slack.octoblu.com/badge.svg)](http://community-slack.octoblu.com)
 
 [![NPM](https://nodei.co/npm/meshblu-rdio-authenticator.svg?style=flat)](https://npmjs.org/package/meshblu-rdio-authenticator)
+[![Dependency status](http://img.shields.io/david/octoblu/meshblu-rdio-authenticator.svg?style=flat)](https://david-dm.org/octoblu/meshblu-rdio-authenticator)
+
 You must set a privateKey and publicKey on your meshblu device
