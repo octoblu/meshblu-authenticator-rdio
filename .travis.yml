@@ -16,3 +16,5 @@ deploy:
   app-id: e737d052-e64c-4c7c-9b4d-727fbb022e61
   on:
     branch: staging
+after_success:
+- bash <(curl -s https://codecov.io/bash)
